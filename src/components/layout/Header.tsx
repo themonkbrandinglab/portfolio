@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
@@ -9,6 +9,7 @@ import MobileMenu from './MobileMenu'
 
 const navLinks = [
   { label: 'Services',  href: '/services'  },
+  { label: 'Why Us',    href: '/#why-us'   },
   { label: 'Projects',  href: '/projects'  },
   { label: 'About',     href: '/about'     },
   { label: 'Contact',   href: '/contact'   },
@@ -26,7 +27,6 @@ export default function Header() {
   }, [])
 
   useEffect(() => { setMenuOpen(false) }, [pathname])
-
   useEffect(() => {
     document.body.style.overflow = menuOpen ? 'hidden' : ''
     return () => { document.body.style.overflow = '' }
@@ -39,16 +39,15 @@ export default function Header() {
           position: 'fixed',
           top: 0, left: 0, right: 0,
           zIndex: 100,
-          // ── 5. Border extremely subtle, disappears when not scrolled
           borderBottom: scrolled
-            ? '1px solid rgba(0,0,0,0.06)'
-            : '1px solid transparent',
+            ? '1px solid rgba(0,0,0,0.10)'
+            : '1px solid rgba(0,0,0,0.06)',
           background: scrolled
-            ? 'rgba(250,250,250,0.92)'
-            : 'transparent',
-          backdropFilter: scrolled ? 'blur(18px)' : 'none',
-          WebkitBackdropFilter: scrolled ? 'blur(18px)' : 'none',
-          transition: 'background 0.45s ease, border-color 0.45s ease, backdrop-filter 0.45s ease',
+            ? 'rgba(250,250,250,0.96)'
+            : 'rgba(250,250,250,0.85)',
+          backdropFilter: 'blur(20px)',
+          WebkitBackdropFilter: 'blur(20px)',
+          transition: 'background 0.4s var(--ease-premium), border-color 0.4s var(--ease-premium)',
         }}
       >
         <div
@@ -65,97 +64,59 @@ export default function Header() {
           }}
         >
 
-          {/* ── Logo ────────────────────────────────────────────────────────
-              mix-blend-mode: lighten makes the JPG's black background
-              invisible against the dark page — logo integrates cleanly.
-              Width: ~120px, height auto.
-          ── */}
-          <Link href="/" aria-label="the.monkbranding.lab — home">
+          {/* Logo */}
+          <Link href="/" aria-label="the.monkbranding.lab home" style={{ display: 'flex', alignItems: 'center', flexShrink: 0 }}>
             <Image
               src="/brand/monk-logo.jpg"
               alt="the.monkbranding.lab"
-              width={240}
-              height={80}
-              priority
+              width={110}
+              height={36}
               style={{
-                width: 120,         /* ── 1. 110–130px target */
-                height: 'auto',
-                display: 'block',
-                // Invert the white-on-black image to black-on-white, then multiply to blend cleanly
+                height: 28,
+                width: 'auto',
+                objectFit: 'contain',
                 filter: 'invert(1)',
                 mixBlendMode: 'multiply',
+                transition: 'opacity 0.3s var(--ease-premium)',
               }}
             />
           </Link>
 
-          {/* ── Desktop navigation ───────────────────────────────────────── */}
-          <nav
-            aria-label="Main navigation"
-            style={{ display: 'flex', alignItems: 'center', gap: '2.75rem' }} /* ── 4. Generous spacing */
-            className="header__nav"
-          >
+          {/* Desktop nav */}
+          <nav aria-label="Main navigation" className="header__nav">
             {navLinks.map((link) => {
               const isActive = pathname === link.href
               return (
                 <Link
                   key={link.href}
                   href={link.href}
+                  className="header__nav-link"
                   style={{
-                    fontSize: '0.625rem',
-                    letterSpacing: '0.16em',
-                    textTransform: 'uppercase',
-                    color: isActive ? 'rgba(17,17,17,1)' : 'rgba(17,17,17,0.68)',
-                    transition: 'color 0.25s ease',
-                    borderBottom: isActive
-                      ? '1px solid rgba(17,17,17,0.3)'
-                      : '1px solid transparent',
-                    paddingBottom: 2,
+                    color: isActive ? 'var(--text-primary)' : 'var(--text-secondary)',
+                    borderBottom: isActive ? '1px solid var(--text-primary)' : '1px solid transparent',
+                    paddingBottom: '2px',
                   }}
-                  className="nav-link-hover"
                 >
                   {link.label}
                 </Link>
               )
             })}
 
-            {/* ── 2. CTA: START A CONVERSATION ── */}
-            <Link
-              href="/contact"
-              className="header__cta"
-              style={{
-                fontSize: '0.5625rem',
-                letterSpacing: '0.16em',
-                textTransform: 'uppercase',
-                padding: '0.5625rem 1.25rem',
-                border: '1px solid rgba(17,17,17,0.22)',
-                color: 'rgba(17,17,17,0.75)',
-                background: 'transparent',
-                transition: 'background 0.25s ease, color 0.25s ease, border-color 0.25s ease',
-                whiteSpace: 'nowrap',
-              }}
-            >
+            {/* CTA — solid black border, fills black on hover */}
+            <Link href="/contact" className="header__cta">
               Start a Conversation
             </Link>
           </nav>
 
-          {/* ── Mobile burger ────────────────────────────────────────────── */}
+          {/* Mobile burger */}
           <button
             onClick={() => setMenuOpen(true)}
             aria-label="Open menu"
             aria-expanded={menuOpen}
             className="header__burger"
-            style={{
-              background: 'none',
-              border: 'none',
-              cursor: 'pointer',
-              padding: '0.25rem',
-              display: 'flex',
-              flexDirection: 'column',
-              gap: 5,
-            }}
           >
-            <span style={{ display: 'block', width: 22, height: 1, background: 'rgba(255,255,255,0.8)' }} />
-            <span style={{ display: 'block', width: 14, height: 1, background: 'rgba(255,255,255,0.8)' }} />
+            <span style={{ display: 'block', width: 22, height: 1, background: 'var(--text-primary)' }} />
+            <span style={{ display: 'block', width: 14, height: 1, background: 'var(--text-primary)' }} />
           </button>
 
         </div>

@@ -1,4 +1,4 @@
-﻿'use client'
+'use client'
 
 import { useRef } from 'react'
 import { motion, useInView, useReducedMotion } from 'framer-motion'
@@ -41,6 +41,7 @@ export default function WhyUsSection() {
 
   return (
     <section
+      id="why-us"
       ref={ref}
       style={{
         background: 'var(--bg-primary)',
