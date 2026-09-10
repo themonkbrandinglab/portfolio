@@ -12,6 +12,8 @@ const brands = [
   { name: 'Zoho', logo: '/projects/zoho/logo.png' },
   { name: 'Zepto', logo: '/projects/zepto/logo.png' },
   { name: 'SkinFirst Clinic', logo: '/projects/skinfirst/logo.png' },
+  { name: 'Myntra', logo: '/projects/myntra/logo.png' },
+  { name: 'Nykaa', logo: '/projects/nykaa/logo.png' },
 ]
 
 const reels = [
@@ -23,10 +25,8 @@ const reels = [
 
 function InstagramReels() {
   useEffect(() => {
-    // Load Instagram embed script
     const existing = document.getElementById('instagram-embed-script')
     if (existing) {
-      // If script already loaded, re-process embeds
       if ((window as any).instgrm) {
         (window as any).instgrm.Embeds.process()
       }
@@ -38,47 +38,71 @@ function InstagramReels() {
     script.async = true
     script.defer = true
     document.body.appendChild(script)
-    return () => {
-      // Don't remove — keep loaded for SPA navigation
-    }
   }, [])
 
   return (
-    <div
-      style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
-        gap: 'var(--space-sm)',
-        alignItems: 'start',
-      }}
-    >
-      {reels.map((url, i) => (
-        <motion.div
-          key={url}
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease, delay: i * 0.1 }}
-          style={{ width: '100%', minHeight: '480px' }}
-        >
-          <blockquote
-            className="instagram-media"
-            data-instgrm-permalink={`${url}?utm_source=ig_embed&utm_campaign=loading`}
-            data-instgrm-version="14"
-            style={{
-              background: 'var(--bg-secondary)',
-              border: '1px solid var(--border-color)',
-              borderRadius: 0,
-              boxShadow: 'none',
-              margin: 0,
-              maxWidth: '100%',
-              minWidth: '280px',
-              padding: 0,
-              width: '100%',
-            }}
-          />
-        </motion.div>
-      ))}
-    </div>
+    <>
+      {/* Uniform card grid CSS injected inline */}
+      <style>{`
+        .reels-grid {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          gap: 1px;
+          background: var(--border-color);
+        }
+        @media (max-width: 640px) {
+          .reels-grid {
+            grid-template-columns: 1fr;
+          }
+        }
+        .reel-cell {
+          background: var(--bg-primary);
+          overflow: hidden;
+          aspect-ratio: 9 / 16;
+          position: relative;
+        }
+        .reel-cell .instagram-media,
+        .reel-cell iframe {
+          position: absolute !important;
+          inset: 0 !important;
+          width: 100% !important;
+          max-width: 100% !important;
+          height: 100% !important;
+          min-width: unset !important;
+          margin: 0 !important;
+          border: none !important;
+          border-radius: 0 !important;
+          box-shadow: none !important;
+        }
+      `}</style>
+
+      <div className="reels-grid">
+        {reels.map((url, i) => (
+          <motion.div
+            key={url}
+            className="reel-cell"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, ease, delay: i * 0.1 }}
+          >
+            <blockquote
+              className="instagram-media"
+              data-instgrm-permalink={`${url}?utm_source=ig_embed&utm_campaign=loading`}
+              data-instgrm-version="14"
+              style={{
+                background: 'var(--bg-secondary)',
+                border: 'none',
+                borderRadius: 0,
+                boxShadow: 'none',
+                margin: 0,
+                padding: 0,
+                width: '100%',
+              }}
+            />
+          </motion.div>
+        ))}
+      </div>
+    </>
   )
 }
 
@@ -122,7 +146,7 @@ export default function ProjectsContent() {
         </div>
       </section>
 
-      {/* Logo Grid */}
+      {/* Logo Grid — 3 columns desktop, 2 tablet, 1 mobile */}
       <section
         ref={brandsRef}
         style={{ padding: 'var(--section-pad) 0', borderBottom: '1px solid var(--border-color)' }}
@@ -131,39 +155,45 @@ export default function ProjectsContent() {
           <div
             style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
+              gridTemplateColumns: 'repeat(3, 1fr)',
               gap: '1px',
               background: 'var(--border-color)',
             }}
+            className="logo-grid"
           >
             {brands.map((brand, i) => (
               <motion.div
                 key={brand.name}
                 initial={rm ? {} : { opacity: 0 }}
                 animate={inView ? { opacity: 1 } : {}}
-                transition={{ duration: 0.8, ease, delay: i * 0.1 }}
+                transition={{ duration: 0.8, ease, delay: i * 0.08 }}
                 style={{
                   background: 'var(--bg-primary)',
                   display: 'flex',
                   flexDirection: 'column',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  padding: 'clamp(2.5rem, 5vw, 4rem)',
+                  padding: 'clamp(2rem, 4vw, 3.5rem)',
                   gap: '1.25rem',
-                  minHeight: '160px',
-                  cursor: 'default',
+                  height: '180px',
+                  transition: 'background 0.3s cubic-bezier(0.16,1,0.3,1)',
                 }}
                 whileHover={{ background: 'var(--bg-secondary)' }}
               >
-                <div style={{ width: '100%', maxWidth: '140px', height: '48px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <Image
-                    src={brand.logo}
-                    alt={brand.name}
-                    width={140}
-                    height={48}
-                    style={{ objectFit: 'contain', width: '100%', height: '100%', mixBlendMode: 'multiply' }}
-                    className="brand-logo-img"
-                  />
+                <div style={{ width: '100%', maxWidth: '130px', height: '44px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  {brand.logo.includes('nykaa') ? (
+                    /* Nykaa placeholder until logo is uploaded */
+                    <span style={{ fontSize: 'var(--label-sm)', letterSpacing: '0.3em', color: 'var(--text-muted)', textTransform: 'uppercase' }}>NYKAA</span>
+                  ) : (
+                    <Image
+                      src={brand.logo}
+                      alt={brand.name}
+                      width={130}
+                      height={44}
+                      style={{ objectFit: 'contain', width: '100%', height: '100%', mixBlendMode: 'multiply' }}
+                      className="brand-logo-img"
+                    />
+                  )}
                 </div>
                 <span style={{ fontSize: 'var(--label-sm)', letterSpacing: '0.2em', color: 'var(--text-muted)', textTransform: 'uppercase' }}>
                   {brand.name}
@@ -171,6 +201,12 @@ export default function ProjectsContent() {
               </motion.div>
             ))}
           </div>
+
+          {/* Responsive override for logo grid */}
+          <style>{`
+            @media (max-width: 768px) { .logo-grid { grid-template-columns: repeat(2, 1fr) !important; } }
+            @media (max-width: 480px) { .logo-grid { grid-template-columns: 1fr !important; } }
+          `}</style>
 
           <p style={{ marginTop: '2rem', fontSize: 'var(--label-sm)', letterSpacing: '0.12em', color: 'var(--text-muted)', textAlign: 'center' }}>
             Strategic explorations — independent market research and brand analysis.
