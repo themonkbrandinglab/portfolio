@@ -69,11 +69,11 @@ export default function Header() {
             <Image
               src="/brand/monk-logo.png"
               alt="the.monkbranding.lab"
-              width={220}
-              height={44}
+              width={709}
+              height={238}
               priority
               style={{
-                height: 44,
+                height: 40,
                 width: 'auto',
                 objectFit: 'contain',
                 display: 'block',

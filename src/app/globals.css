@@ -50,7 +50,7 @@
   --border-color-hover: rgba(0, 0, 0, 0.15);
 
   /* Layout & Spacing */
-  --header-height: 84px;
+  --header-height: 60px;
   --content-max: 1440px;
   --page-gutter: clamp(20px, 4vw, 72px);
   --section-pad: clamp(80px, 10vw, 180px);
