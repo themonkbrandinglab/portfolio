@@ -1,4 +1,4 @@
-﻿'use client'
+'use client'
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
@@ -67,17 +67,16 @@ export default function Header() {
           {/* Logo */}
           <Link href="/" aria-label="the.monkbranding.lab home" style={{ display: 'flex', alignItems: 'center', flexShrink: 0 }}>
             <Image
-              src="/brand/monk-logo.jpg"
+              src="/brand/monk-logo.png"
               alt="the.monkbranding.lab"
-              width={110}
-              height={36}
+              width={220}
+              height={44}
+              priority
               style={{
-                height: 28,
+                height: 44,
                 width: 'auto',
                 objectFit: 'contain',
-                filter: 'invert(1)',
-                mixBlendMode: 'multiply',
-                transition: 'opacity 0.3s var(--ease-premium)',
+                display: 'block',
               }}
             />
           </Link>

@@ -87,15 +87,16 @@ export default function Footer() {
             <div style={{ height: '3.5rem', display: 'flex', alignItems: 'flex-start' }}>
               <Link href="/">
                 <Image
-                  src="/brand/monk-logo.jpg"
+                  src="/brand/monk-logo.png"
                   alt="the.monkbranding.lab"
-                  width={120}
-                  height={40}
+                  width={180}
+                  height={36}
                   className="footer__logo-img"
-                  style={{ 
-                    height: 'auto',
-                    filter: 'invert(1)',
-                    mixBlendMode: 'multiply'
+                  style={{
+                    height: 36,
+                    width: 'auto',
+                    objectFit: 'contain',
+                    display: 'block',
                   }}
                 />
               </Link>
