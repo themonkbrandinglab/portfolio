@@ -3,12 +3,14 @@ import { Inter, Geist } from 'next/font/google'
 import './globals.css'
 import SmoothScrollProvider from '@/components/providers/SmoothScrollProvider'
 import PageTransitionWrapper from '@/components/providers/PageTransitionWrapper'
+import PremiumLoader from '@/components/ui/PremiumLoader'
+import CustomCursor from '@/components/ui/CustomCursor'
 
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
   maximumScale: 5,   // allow pinch zoom for accessibility
-  themeColor: '#0a0a0a',
+  themeColor: '#FAFAFA',
 }
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter', display: 'swap' })
@@ -35,6 +37,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={`${inter.variable} ${geistSans.variable}`} suppressHydrationWarning>
       <body>
+        <PremiumLoader />
+        <CustomCursor />
         <SmoothScrollProvider>
           <PageTransitionWrapper>
             {children}

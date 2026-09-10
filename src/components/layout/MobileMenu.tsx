@@ -28,7 +28,7 @@ export default function MobileMenu({ onClose, links }: Props) {
         position: 'fixed',
         inset: 0,
         zIndex: 200,
-        background: '#0a0a0a',
+        background: 'var(--bg-primary)',
         display: 'flex',
         flexDirection: 'column',
         overflow: 'hidden',

@@ -4,30 +4,26 @@ import { usePathname } from 'next/navigation'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useEffect, useRef } from 'react'
 
-// Curtain variants — a full-screen black panel that wipes IN then OUT
-const curtain = {
-  // Page is about to leave — curtain slides up covering screen
-  initial: { y: '100%' },
-  // Curtain fully covers screen
+const overlay = {
+  initial: { opacity: 1 },
   enter: {
-    y: '0%',
-    transition: { duration: 0.55, ease: [0.76, 0, 0.24, 1] as [number, number, number, number] },
+    opacity: 1,
+    transition: { duration: 0.4, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] },
   },
-  // Curtain exits upward revealing new page
   exit: {
-    y: '-100%',
-    transition: { duration: 0.55, ease: [0.76, 0, 0.24, 1] as [number, number, number, number], delay: 0.05 },
+    opacity: 0,
+    transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] as [number, number, number, number], delay: 0.1 },
   },
 }
 
-// Page content — fades in after curtain exits
 const pageVariants = {
-  hidden: { opacity: 0 },
+  hidden: { opacity: 0, y: 10 },
   visible: {
     opacity: 1,
+    y: 0,
     transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] as [number, number, number, number], delay: 0.1 },
   },
-  exit: { opacity: 0, transition: { duration: 0.2 } },
+  exit: { opacity: 0, transition: { duration: 0.3 } },
 }
 
 export default function PageTransitionWrapper({ children }: { children: React.ReactNode }) {
@@ -35,63 +31,33 @@ export default function PageTransitionWrapper({ children }: { children: React.Re
   const isFirst = useRef(true)
 
   useEffect(() => {
-    // Scroll to top on every route change
     window.scrollTo({ top: 0 })
     isFirst.current = false
   }, [pathname])
 
   return (
-    <>
-      {/* Curtain overlay */}
-      <AnimatePresence mode="wait">
+    <AnimatePresence mode="wait">
+      <div key={pathname} className="relative w-full min-h-screen">
+        
+        {/* The White Overlay */}
         <motion.div
-          key={`curtain-${pathname}`}
-          variants={curtain}
-          initial="initial"
-          animate="exit"  // immediately exits = just slides through
+          className="fixed inset-0 z-[100] bg-[var(--bg-primary)] pointer-events-none"
+          initial={isFirst.current ? 'initial' : 'enter'}
+          animate="exit"
           exit="enter"
-          style={{
-            position: 'fixed',
-            inset: 0,
-            zIndex: 9999,
-            background: '#0a0a0a',
-            pointerEvents: 'none',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
-          {/* Studio name shown on curtain */}
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            style={{
-              fontFamily: 'var(--font-geist-sans), system-ui, sans-serif',
-              fontSize: '0.5625rem',
-              letterSpacing: '0.3em',
-              textTransform: 'uppercase',
-              color: 'rgba(255,255,255,0.25)',
-            }}
-          >
-            the.monkbranding.lab
-          </motion.p>
-        </motion.div>
-      </AnimatePresence>
+          variants={overlay}
+        />
 
-      {/* Page content */}
-      <AnimatePresence mode="wait">
+        {/* Page Content */}
         <motion.div
-          key={pathname}
-          variants={pageVariants}
           initial="hidden"
           animate="visible"
           exit="exit"
+          variants={pageVariants}
         >
           {children}
         </motion.div>
-      </AnimatePresence>
-    </>
+      </div>
+    </AnimatePresence>
   )
 }

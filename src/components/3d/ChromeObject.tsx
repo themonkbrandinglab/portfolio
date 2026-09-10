@@ -91,36 +91,41 @@ export default function ChromeObject({
 
   return (
     <>
-      {/* Environment for chrome reflections */}
+      {/* Environment for chrome reflections - bright studio */}
       <Environment preset="studio" />
 
-      {/* Ambient light */}
-      <ambientLight intensity={0.3} />
+      {/* Ambient light - brighter for light mode */}
+      <ambientLight intensity={1.5} />
 
-      {/* Key light — cool silver */}
+      {/* Key light — cool, crisp light */}
       <directionalLight
         position={[3, 4, 2]}
-        intensity={2.5}
-        color="#e8e8e8"
+        intensity={3.5}
+        color="#ffffff"
       />
 
-      {/* Fill light */}
+      {/* Fill light - warm/pinkish to create iridescent hints */}
       <directionalLight
         position={[-3, -1, 1]}
-        intensity={0.8}
-        color="#a0a0c0"
+        intensity={2.0}
+        color="#ffccdd"
       />
 
-      {/* Rim light */}
-      <pointLight position={[0, 3, -2]} intensity={1.5} color="#ffffff" />
+      {/* Rim light - cyan/blue for the opposite spectrum of iridescence */}
+      <pointLight position={[0, 3, -2]} intensity={3.0} color="#ccddff" />
 
       <group ref={groupRef}>
         <mesh ref={meshRef} geometry={geometry} castShadow>
-          <meshStandardMaterial
-            color="#d0d0d0"
+          <meshPhysicalMaterial
+            color="#ffffff"
             metalness={1.0}
-            roughness={0.06}
-            envMapIntensity={2.5}
+            roughness={0.02}
+            envMapIntensity={1.5}
+            clearcoat={1.0}
+            clearcoatRoughness={0.1}
+            iridescence={1.0}
+            iridescenceIOR={1.4}
+            iridescenceThicknessRange={[100, 400]}
           />
         </mesh>
       </group>

@@ -41,10 +41,10 @@ export default function Header() {
           zIndex: 100,
           // ── 5. Border extremely subtle, disappears when not scrolled
           borderBottom: scrolled
-            ? '1px solid rgba(255,255,255,0.06)'
+            ? '1px solid rgba(0,0,0,0.06)'
             : '1px solid transparent',
           background: scrolled
-            ? 'rgba(10,10,10,0.92)'
+            ? 'rgba(250,250,250,0.92)'
             : 'transparent',
           backdropFilter: scrolled ? 'blur(18px)' : 'none',
           WebkitBackdropFilter: scrolled ? 'blur(18px)' : 'none',
@@ -54,17 +54,14 @@ export default function Header() {
         <div
           style={{
             width: '100%',
-            maxWidth: 1440,
-            marginLeft: 'auto',
-            marginRight: 'auto',
-            // ── 1. Left/right margin: 48px desktop, fluid on smaller screens
-            paddingLeft:  'clamp(1.25rem, 3.5vw, 3rem)',
-            paddingRight: 'clamp(1.25rem, 3.5vw, 3rem)',
+            maxWidth: 'var(--content-max)',
+            margin: '0 auto',
+            paddingLeft: 'var(--page-gutter)',
+            paddingRight: 'var(--page-gutter)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
-            // ── 1. Header height: 88px
-            height: 88,
+            height: 'var(--header-height)',
           }}
         >
 
@@ -84,8 +81,9 @@ export default function Header() {
                 width: 120,         /* ── 1. 110–130px target */
                 height: 'auto',
                 display: 'block',
-                // ── 1. Remove visible black box — black pixels become transparent
-                mixBlendMode: 'lighten',
+                // Invert the white-on-black image to black-on-white, then multiply to blend cleanly
+                filter: 'invert(1)',
+                mixBlendMode: 'multiply',
               }}
             />
           </Link>
@@ -106,11 +104,10 @@ export default function Header() {
                     fontSize: '0.625rem',
                     letterSpacing: '0.16em',
                     textTransform: 'uppercase',
-                    // ── 3. 65–75% white default, 100% on hover
-                    color: isActive ? 'rgba(255,255,255,1)' : 'rgba(255,255,255,0.68)',
+                    color: isActive ? 'rgba(17,17,17,1)' : 'rgba(17,17,17,0.68)',
                     transition: 'color 0.25s ease',
                     borderBottom: isActive
-                      ? '1px solid rgba(255,255,255,0.3)'
+                      ? '1px solid rgba(17,17,17,0.3)'
                       : '1px solid transparent',
                     paddingBottom: 2,
                   }}
@@ -130,8 +127,8 @@ export default function Header() {
                 letterSpacing: '0.16em',
                 textTransform: 'uppercase',
                 padding: '0.5625rem 1.25rem',
-                border: '1px solid rgba(255,255,255,0.22)',
-                color: 'rgba(255,255,255,0.75)',
+                border: '1px solid rgba(17,17,17,0.22)',
+                color: 'rgba(17,17,17,0.75)',
                 background: 'transparent',
                 transition: 'background 0.25s ease, color 0.25s ease, border-color 0.25s ease',
                 whiteSpace: 'nowrap',

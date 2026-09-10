@@ -3,9 +3,10 @@ import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import Hero from '@/components/hero/Hero'
 import ManifestoSection from '@/components/sections/ManifestoSection'
-import HowWeThink from '@/components/sections/HowWeThink'
+import WhyUsSection from '@/components/sections/WhyUsSection'
+import WorkflowTimeline from '@/components/sections/WorkflowTimeline'
 import CapabilitySection from '@/components/sections/CapabilitySection'
-import ProcessSection from '@/components/sections/ProcessSection'
+import ServiceTiers from '@/components/sections/ServiceTiers'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
@@ -20,9 +21,10 @@ export default function HomePage() {
       <main id="main-content">
         <Hero />
         <ManifestoSection />
-        <HowWeThink />
+        <WhyUsSection />
+        <WorkflowTimeline />
         <CapabilitySection />
-        <ProcessSection />
+        <ServiceTiers />
 
         {/* CTA Banner */}
         <div className="cta-banner">
