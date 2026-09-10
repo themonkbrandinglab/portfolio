@@ -1,4 +1,4 @@
-﻿'use client'
+'use client'
 
 import { motion, useInView, useReducedMotion } from 'framer-motion'
 import { useRef } from 'react'
@@ -104,6 +104,7 @@ export default function ServiceTiers() {
         </motion.h2>
 
         <div
+          className="service-tiers-grid"
           style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
@@ -244,4 +245,5 @@ export default function ServiceTiers() {
     </section>
   )
 }
+
 

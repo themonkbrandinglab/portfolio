@@ -72,7 +72,7 @@ export default function WhyUsSection() {
             style={{ maxWidth: '56ch', fontSize: 'var(--body-lg)' }}
             {...fadeUp(0.2)}
           >
-            We help brands build a strategic system for growth — one that understands
+            We help brands build a strategic system for growth â€” one that understands
             the market, the customer and the opportunity before anything else.
           </motion.p>
         </div>
@@ -87,6 +87,7 @@ export default function WhyUsSection() {
         </motion.span>
 
         <div
+          className="why-us-grid"
           style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
@@ -140,4 +141,5 @@ export default function WhyUsSection() {
     </section>
   )
 }
+
 
