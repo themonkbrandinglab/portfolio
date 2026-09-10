@@ -1194,10 +1194,10 @@ a {
 
 .footer__brand-col {}
 .footer__logo-img {
-  height: 22px;
+  height: 56px;
   width: auto;
   object-fit: contain;
-  opacity: 0.75;
+  opacity: 0.9;
   transition: opacity 0.3s;
 }
 .footer__logo-img:hover { opacity: 1; }

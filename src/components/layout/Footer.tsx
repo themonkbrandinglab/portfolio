@@ -84,16 +84,15 @@ export default function Footer() {
             style={{ display: 'flex', flexDirection: 'column' }}
           >
             {/* Logo container takes a fixed height to easily align adjacent columns */}
-            <div style={{ height: '3.5rem', display: 'flex', alignItems: 'flex-start' }}>
+            <div style={{ marginBottom: '1.25rem' }}>
               <Link href="/">
                 <Image
                   src="/brand/monk-logo.png"
                   alt="the.monkbranding.lab"
-                  width={180}
-                  height={36}
+                  width={709}
+                  height={238}
                   className="footer__logo-img"
                   style={{
-                    height: 36,
                     width: 'auto',
                     objectFit: 'contain',
                     display: 'block',
@@ -116,7 +115,7 @@ export default function Footer() {
               initial={{ opacity: 0, y: 20 }}
               animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
               transition={{ duration: 1.0, ease, delay: 0.1 + ci * 0.08 }}
-              style={{ paddingTop: '3.5rem' }} /* Pushes headers down to align perfectly with the descriptive text */
+              style={{ paddingTop: '0.5rem' }}
             >
               <span className="footer__col-label">{col.label}</span>
               {col.links.map((l) => (
