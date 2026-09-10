@@ -8,12 +8,12 @@ import Link from 'next/link'
 const ease = [0.16, 1, 0.3, 1] as [number, number, number, number]
 
 const brands = [
-  { name: 'Adobe', logo: '/projects/adobe/logo.png' },
-  { name: 'Zoho', logo: '/projects/zoho/logo.png' },
-  { name: 'Zepto', logo: '/projects/zepto/logo.png' },
-  { name: 'SkinFirst Clinic', logo: '/projects/skinfirst/logo.png' },
-  { name: 'Myntra', logo: '/projects/myntra/logo.png' },
-  { name: 'Nykaa', logo: '/projects/nykaa/logo.png' },
+  { name: 'Adobe',          logo: '/projects/adobe/logo.png'    },
+  { name: 'Zoho',           logo: '/projects/zoho/logo.png'     },
+  { name: 'Zepto',          logo: '/projects/zepto/logo.png'    },
+  { name: 'SkinFirst',      logo: '/projects/skinfirst/logo.png'},
+  { name: 'Myntra',         logo: '/projects/myntra/logo.png'   },
+  { name: 'Nykaa',          logo: '/projects/nykaa/logo.png'    },
 ]
 
 const reels = [
@@ -27,9 +27,7 @@ function InstagramReels() {
   useEffect(() => {
     const existing = document.getElementById('instagram-embed-script')
     if (existing) {
-      if ((window as any).instgrm) {
-        (window as any).instgrm.Embeds.process()
-      }
+      if ((window as any).instgrm) (window as any).instgrm.Embeds.process()
       return
     }
     const script = document.createElement('script')
@@ -42,7 +40,6 @@ function InstagramReels() {
 
   return (
     <>
-      {/* Uniform card grid CSS injected inline */}
       <style>{`
         .reels-grid {
           display: grid;
@@ -51,9 +48,7 @@ function InstagramReels() {
           background: var(--border-color);
         }
         @media (max-width: 640px) {
-          .reels-grid {
-            grid-template-columns: 1fr;
-          }
+          .reels-grid { grid-template-columns: 1fr; }
         }
         .reel-cell {
           background: var(--bg-primary);
@@ -73,6 +68,18 @@ function InstagramReels() {
           border: none !important;
           border-radius: 0 !important;
           box-shadow: none !important;
+        }
+        .logo-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 1px;
+          background: var(--border-color);
+        }
+        @media (max-width: 768px) {
+          .logo-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 480px) {
+          .logo-grid { grid-template-columns: 1fr; }
         }
       `}</style>
 
@@ -146,21 +153,13 @@ export default function ProjectsContent() {
         </div>
       </section>
 
-      {/* Logo Grid — 3 columns desktop, 2 tablet, 1 mobile */}
+      {/* Logo Grid */}
       <section
         ref={brandsRef}
         style={{ padding: 'var(--section-pad) 0', borderBottom: '1px solid var(--border-color)' }}
       >
         <div className="container-site">
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(3, 1fr)',
-              gap: '1px',
-              background: 'var(--border-color)',
-            }}
-            className="logo-grid"
-          >
+          <div className="logo-grid">
             {brands.map((brand, i) => (
               <motion.div
                 key={brand.name}
@@ -176,24 +175,18 @@ export default function ProjectsContent() {
                   padding: 'clamp(2rem, 4vw, 3.5rem)',
                   gap: '1.25rem',
                   height: '180px',
-                  transition: 'background 0.3s cubic-bezier(0.16,1,0.3,1)',
                 }}
                 whileHover={{ background: 'var(--bg-secondary)' }}
               >
                 <div style={{ width: '100%', maxWidth: '130px', height: '44px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  {brand.logo.includes('nykaa') ? (
-                    /* Nykaa placeholder until logo is uploaded */
-                    <span style={{ fontSize: 'var(--label-sm)', letterSpacing: '0.3em', color: 'var(--text-muted)', textTransform: 'uppercase' }}>NYKAA</span>
-                  ) : (
-                    <Image
-                      src={brand.logo}
-                      alt={brand.name}
-                      width={130}
-                      height={44}
-                      style={{ objectFit: 'contain', width: '100%', height: '100%', mixBlendMode: 'multiply' }}
-                      className="brand-logo-img"
-                    />
-                  )}
+                  <Image
+                    src={brand.logo}
+                    alt={brand.name}
+                    width={130}
+                    height={44}
+                    style={{ objectFit: 'contain', width: '100%', height: '100%', mixBlendMode: 'multiply' }}
+                    className="brand-logo-img"
+                  />
                 </div>
                 <span style={{ fontSize: 'var(--label-sm)', letterSpacing: '0.2em', color: 'var(--text-muted)', textTransform: 'uppercase' }}>
                   {brand.name}
@@ -201,12 +194,6 @@ export default function ProjectsContent() {
               </motion.div>
             ))}
           </div>
-
-          {/* Responsive override for logo grid */}
-          <style>{`
-            @media (max-width: 768px) { .logo-grid { grid-template-columns: repeat(2, 1fr) !important; } }
-            @media (max-width: 480px) { .logo-grid { grid-template-columns: 1fr !important; } }
-          `}</style>
 
           <p style={{ marginTop: '2rem', fontSize: 'var(--label-sm)', letterSpacing: '0.12em', color: 'var(--text-muted)', textAlign: 'center' }}>
             Strategic explorations — independent market research and brand analysis.
@@ -223,9 +210,7 @@ export default function ProjectsContent() {
           <h2 className="section-title text-display" style={{ marginBottom: 'var(--space-md)' }}>
             OUR LATEST<br />THINKING.
           </h2>
-
           <InstagramReels />
-
           <div style={{ marginTop: '2.5rem', textAlign: 'center' }}>
             <a
               href="https://www.instagram.com/themonkbrandinglab"
