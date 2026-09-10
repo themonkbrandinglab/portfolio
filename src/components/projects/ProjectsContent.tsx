@@ -8,12 +8,12 @@ import Link from 'next/link'
 const ease = [0.16, 1, 0.3, 1] as [number, number, number, number]
 
 const brands = [
-  { name: 'Adobe',          logo: '/projects/adobe/logo.png'    },
-  { name: 'Zoho',           logo: '/projects/zoho/logo.png'     },
-  { name: 'Zepto',          logo: '/projects/zepto/logo.png'    },
-  { name: 'SkinFirst',      logo: '/projects/skinfirst/logo.png'},
-  { name: 'Myntra',         logo: '/projects/myntra/logo.png'   },
-  { name: 'Nykaa',          logo: '/projects/nykaa/logo.png'    },
+  { name: 'Adobe',     logo: '/projects/adobe/logo.png'     },
+  { name: 'Zoho',      logo: '/projects/zoho/logo.png'      },
+  { name: 'Zepto',     logo: '/projects/zepto/logo.png'     },
+  { name: 'SkinFirst', logo: '/projects/skinfirst/logo.png' },
+  { name: 'Myntra',    logo: '/projects/myntra/logo.png'    },
+  { name: 'Nykaa',     logo: '/projects/nykaa/logo.png'     },
 ]
 
 const reels = [
@@ -69,17 +69,56 @@ function InstagramReels() {
           border-radius: 0 !important;
           box-shadow: none !important;
         }
+
+        /* Logo grid */
         .logo-grid {
           display: grid;
-          grid-template-columns: repeat(3, 1fr);
+          grid-template-columns: repeat(4, 1fr);
           gap: 1px;
           background: var(--border-color);
         }
         @media (max-width: 768px) {
-          .logo-grid { grid-template-columns: repeat(2, 1fr); }
+          .logo-grid { grid-template-columns: repeat(3, 1fr); }
         }
         @media (max-width: 480px) {
-          .logo-grid { grid-template-columns: 1fr; }
+          .logo-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        /* Logo image — grayscale + dim by default, full colour on hover */
+        .logo-cell {
+          background: var(--bg-primary);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: clamp(1.5rem, 3vw, 2rem);
+          height: 140px;
+          transition: background 0.35s var(--ease-premium);
+          cursor: default;
+        }
+        .logo-cell:hover {
+          background: var(--bg-secondary);
+        }
+        .logo-img {
+          width: auto;
+          height: 48px;
+          max-width: 100%;
+          object-fit: contain;
+          filter: grayscale(1);
+          opacity: 0.4;
+          transition: filter 0.4s var(--ease-premium), opacity 0.4s var(--ease-premium);
+          display: block;
+        }
+        .logo-cell:hover .logo-img {
+          filter: grayscale(0);
+          opacity: 1;
+        }
+        /* SkinFirst has more detail — give it slightly more height */
+        .logo-img--skinfirst {
+          height: 40px;
+        }
+        /* Zoho icon is square — constrain width too */
+        .logo-img--zoho {
+          height: 52px;
         }
       `}</style>
 
@@ -160,42 +199,28 @@ export default function ProjectsContent() {
       >
         <div className="container-site">
           <div className="logo-grid">
-            {brands.map((brand, i) => (
-              <motion.div
-                key={brand.name}
-                initial={rm ? {} : { opacity: 0 }}
-                animate={inView ? { opacity: 1 } : {}}
-                transition={{ duration: 0.8, ease, delay: i * 0.08 }}
-                style={{
-                  background: 'var(--bg-primary)',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  padding: 'clamp(2rem, 4vw, 3.5rem)',
-                  gap: '1.25rem',
-                  height: '180px',
-                }}
-                whileHover={{ background: 'var(--bg-secondary)' }}
-              >
-                <div style={{ width: '100%', maxWidth: '130px', height: '44px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <Image
+            {brands.map((brand, i) => {
+              const slug = brand.name.toLowerCase().replace(/\s/g, '')
+              return (
+                <motion.div
+                  key={brand.name}
+                  className="logo-cell"
+                  initial={rm ? {} : { opacity: 0 }}
+                  animate={inView ? { opacity: 1 } : {}}
+                  transition={{ duration: 0.8, ease, delay: i * 0.07 }}
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
                     src={brand.logo}
                     alt={brand.name}
-                    width={130}
-                    height={44}
-                    style={{ objectFit: 'contain', width: '100%', height: '100%', mixBlendMode: 'multiply' }}
-                    className="brand-logo-img"
+                    className={`logo-img logo-img--${slug}`}
                   />
-                </div>
-                <span style={{ fontSize: 'var(--label-sm)', letterSpacing: '0.2em', color: 'var(--text-muted)', textTransform: 'uppercase' }}>
-                  {brand.name}
-                </span>
-              </motion.div>
-            ))}
+                </motion.div>
+              )
+            })}
           </div>
 
-          <p style={{ marginTop: '2rem', fontSize: 'var(--label-sm)', letterSpacing: '0.12em', color: 'var(--text-muted)', textAlign: 'center' }}>
+          <p style={{ marginTop: '1.75rem', fontSize: 'var(--label-sm)', letterSpacing: '0.12em', color: 'var(--text-muted)', textAlign: 'center' }}>
             Strategic explorations — independent market research and brand analysis.
           </p>
         </div>
