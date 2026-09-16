@@ -1,44 +1,32 @@
 import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
-  // Enable React strict mode for better development experience
+  // GitHub Pages static export
+  output: 'export',
+
+  // GitHub Pages project URL:
+  // https://USERNAME.github.io/themonkbrandinglab/
+  basePath: '/themonkbrandinglab',
+
+  // React
   reactStrictMode: true,
 
-  // Transpile Three.js packages for Next.js compatibility
-  transpilePackages: ['three', '@react-three/fiber', '@react-three/drei'],
+  // Three.js compatibility
+  transpilePackages: [
+    'three',
+    '@react-three/fiber',
+    '@react-three/drei',
+  ],
 
-  // Image optimization
+  // GitHub Pages cannot use Next.js Image Optimization
   images: {
-    formats: ['image/avif', 'image/webp'],
-    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
+    unoptimized: true,
   },
 
-  // Headers for performance
-  async headers() {
-    return [
-      {
-        source: '/brand/:path*',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'public, max-age=31536000, immutable',
-          },
-        ],
-      },
-      {
-        source: '/projects/:path*',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'public, max-age=31536000, immutable',
-          },
-        ],
-      },
-    ]
-  },
-
-  // Allow ngrok tunnel in development
-  allowedDevOrigins: ['autotypic-febrifugal-vada.ngrok-free.dev'],
+  // Development only
+  allowedDevOrigins: [
+    'autotypic-febrifugal-vada.ngrok-free.dev',
+  ],
 }
 
 export default nextConfig
