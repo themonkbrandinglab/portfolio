@@ -1,4 +1,4 @@
-﻿'use client'
+'use client'
 
 import { useRef, useEffect } from 'react'
 import { motion, useInView, useReducedMotion } from 'framer-motion'
@@ -17,6 +17,7 @@ const brands = [
 ]
 
 const reels = [
+  'https://www.instagram.com/reel/Ddqx6cATqRy/',
   'https://www.instagram.com/reel/DZ7dXvyTT4-/',
   'https://www.instagram.com/reel/DZUqjH9yLwT/',
   'https://www.instagram.com/reel/DTGD8uwFF07/',
