@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useRef, useEffect } from 'react'
 import { motion, useInView, useReducedMotion } from 'framer-motion'
@@ -25,45 +25,30 @@ const reels = [
 ]
 
 function InstagramReels() {
-  useEffect(() => {
-    const existing = document.getElementById('instagram-embed-script')
-    if (existing) {
-      setTimeout(() => {
-        if ((window as any).instgrm) (window as any).instgrm.Embeds.process()
-      }, 100)
-      return
-    }
-    const script = document.createElement('script')
-    script.id = 'instagram-embed-script'
-    script.src = '//www.instagram.com/embed.js'
-    script.async = true
-    script.defer = true
-    document.body.appendChild(script)
-  }, [])
-
   return (
     <>
       <style>{`
         .reels-grid {
           display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-          gap: 1.5rem;
+          grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+          gap: 2rem;
         }
         .reel-cell {
           background: transparent;
           width: 100%;
-          max-width: 320px;
+          max-width: 340px;
           margin: 0 auto;
           display: flex;
           justify-content: center;
+          height: 600px; /* Fixed height for iframe cards */
         }
-        .reel-cell .instagram-media {
-          margin: 0 !important;
+        .reel-cell iframe {
           width: 100% !important;
-          max-width: 100% !important;
+          height: 100% !important;
           border-radius: 8px !important;
           border: 1px solid var(--border-color) !important;
           box-shadow: 0 4px 12px rgba(0,0,0,0.05) !important;
+          background: var(--bg-primary);
         }
 
         /* Logo grid */
@@ -80,7 +65,7 @@ function InstagramReels() {
           .logo-grid { grid-template-columns: repeat(2, 1fr); }
         }
 
-        /* Logo image â€” grayscale + dim by default, full colour on hover */
+        /* Logo image Ã¢â‚¬â€ grayscale + dim by default, full colour on hover */
         .logo-cell {
           background: var(--bg-primary);
           display: flex;
@@ -108,11 +93,11 @@ function InstagramReels() {
           filter: grayscale(0);
           opacity: 1;
         }
-        /* SkinFirst has more detail â€” give it slightly more height */
+        /* SkinFirst has more detail Ã¢â‚¬â€ give it slightly more height */
         .logo-img--skinfirst {
           height: 40px;
         }
-        /* Zoho icon is square â€” constrain width too */
+        /* Zoho icon is square Ã¢â‚¬â€ constrain width too */
         .logo-img--zoho {
           height: 52px;
         }
@@ -127,20 +112,7 @@ function InstagramReels() {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, ease, delay: i * 0.1 }}
           >
-            <blockquote
-              className="instagram-media"
-              data-instgrm-permalink={`${url}?utm_source=ig_embed&utm_campaign=loading`}
-              data-instgrm-version="14"
-              style={{
-                background: 'var(--bg-secondary)',
-                border: 'none',
-                borderRadius: 0,
-                boxShadow: 'none',
-                margin: 0,
-                padding: 0,
-                width: '100%',
-              }}
-            />
+            <iframe src={`${url}embed`} allowTransparency={true} allow="encrypted-media" frameBorder="0" scrolling="no" />
           </motion.div>
         ))}
       </div>
@@ -217,7 +189,7 @@ export default function ProjectsContent() {
           </div>
 
           <p style={{ marginTop: '1.75rem', fontSize: 'var(--label-sm)', letterSpacing: '0.12em', color: 'var(--text-muted)', textAlign: 'center' }}>
-            Strategic explorations â€” independent market research and brand analysis.
+            Strategic explorations Ã¢â‚¬â€ independent market research and brand analysis.
           </p>
         </div>
       </section>
@@ -259,4 +231,7 @@ export default function ProjectsContent() {
     </>
   )
 }
+
+
+
 
